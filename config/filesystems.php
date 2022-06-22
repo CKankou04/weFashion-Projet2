@@ -32,7 +32,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => public_path('picture product'),
+            'root' => public_path('picture_product'),
             'throw' => false,
         ],
 
