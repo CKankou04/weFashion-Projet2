@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
-    protected $paginate = 6;
+    protected $paginate = 8;
 
     public function __construct(){
 
@@ -41,7 +41,7 @@ class FrontController extends Controller
 
     public function showProductBySale(){
         //
-        $products = Product::with('picture')->where('state', 'SOLDE')->paginate($this->paginate);
+        $products = Product::with('picture')->where('state', 'sale')->paginate($this->paginate);
 
         return view('front.index', ['products' => $products]);
     }

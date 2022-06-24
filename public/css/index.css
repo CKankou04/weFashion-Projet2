@@ -44,6 +44,7 @@
     border-bottom: none;
     display: block;
     transition: all 0.3s;
+    text-decoration:none;
 }
 .product-grid .product-links li:last-child a{ border-bottom: 1px solid #333; }
 .product-grid .product-links li a:hover{
@@ -62,6 +63,7 @@
     left: 0;
     bottom: -60px;
     transition: all 0.3s ease 0s;
+    text-decoration:none;
 }
 .product-grid:hover .add-to-cart{ bottom: 0; }
 .product-grid .add-to-cart:hover{ text-shadow: 4px 4px rgba(0,0,0,0.2); }
@@ -79,6 +81,7 @@
 .product-grid .title a{
     color: #777;
     transition: all 0.3s ease 0s;
+    text-decoration:none;
 }
 .product-grid .title a:hover{ color: #a5ba8d; }
 .product-grid .price{

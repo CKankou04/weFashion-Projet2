@@ -29,7 +29,7 @@
                             <td align="center">{{$product->price}} €</td>
                             <td align="center">
                                 @if($product->isVisible == 'published')
-                                    <button type="button" class="btn btn-light">Publié</button>
+                                    <button type="button" class="btn btn-info">Publié</button>
                                 @else
                                     <button type="button" class="btn btn-secondary">Non publié</button>
                                 @endif
