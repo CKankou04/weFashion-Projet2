@@ -66,19 +66,14 @@
   <div class="container">
     <a href="{{ url('/') }}" class="navbar-brand">
       <!-- Logo Image -->
-      <img src="#" alt="logo">
-      {{ config('app.name', 'weFashion') }}
-      <!-- Logo Text -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+      <img src="images/wefashion.png" alt="logo" width="50" height="50">
     </a>
 
     <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
 
     <div id="navbarSupportedContent" class="collapse navbar-collapse">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active"><a href="{{url('solde')}}" class="nav-link">Solde <span class="sr-only">(current)</span></a></li>
+        <li class="nav-item active"><a href="{{url('solde')}}" class="nav-link">Solde</a></li>
         @forelse($categories as $id => $name)
                     <li class="nav-item">
                         <a class="nav-link" href="{{url('category', $id)}}">{{$name}}</a>
