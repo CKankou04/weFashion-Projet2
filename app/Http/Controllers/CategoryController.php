@@ -7,6 +7,16 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    protected $paginate = 15;
+
+    public function __construct(){
+
+        // méthode pour injecter des données à une vue partielle
+        view()->composer('partials.menu', function($view){
+            $categories = Category::pluck('name', 'id')->all(); // on récupère un tableau associatif ['id' => 1]
+            $view->with('categories', $categories ); // on passe les données à la vue
+        });
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::paginate($this->paginate);
+        return view('back.category.index', ['categories' => $categories]);
     }
 
     /**
@@ -24,7 +35,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('back.category.create');
     }
 
     /**
@@ -35,7 +46,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $category = Category::create($request->all()); // associé les fillable
+
+        return redirect()->route('category.index')->with('message', 'La catégorie a été ajoutée avec succès');
     }
 
     /**
@@ -44,7 +61,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
         //
     }
@@ -55,9 +72,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category = Category::find($id);
+
+        return view('back.category.create', compact('category'));
     }
 
     /**
@@ -67,9 +86,17 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $category =Category::find($id); // associé les fillables
+
+        $category->update($request->all());
+
+        return redirect()->route('category.index')->with('message', 'La categorie a été modifiée avec succès');
     }
 
     /**
@@ -78,8 +105,12 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+
+        $category->delete();
+
+        return redirect()->route('category.index')->with('message', 'Catégorie supprimée avec succès');
     }
 }

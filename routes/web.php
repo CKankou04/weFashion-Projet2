@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +20,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('admin/product',\App\Http\Controllers\ProductController::class)
-    ->middleware(['auth']);
+Route::resource('admin/product',ProductController::class)->middleware(['auth']);
+Route::resource('admin/category',CategoryController::class)->middleware(['auth']);
+
 
 Auth::routes();
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
