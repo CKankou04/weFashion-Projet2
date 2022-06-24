@@ -18,7 +18,7 @@
                                 <div class="new-arrival-content text-center mt-3">
                                     <h5><a href="{{url('product', $product->id)}}">{{$product->name}}</a></h5>
                                     <span class="price">{{ $product->price }} €</span><br>
-                                    <button type="button" class="btn btn-primary">Ajouter au panier</button><br>
+                                    <button type="button" class="btn btn-primary">Ajouter au panier ici</button><br>
                                 </div>
                             </div>
                         </div>
