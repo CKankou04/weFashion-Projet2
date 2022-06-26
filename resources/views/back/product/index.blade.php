@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="fs-1 fst-italic text-center">Bienvenue sur le tableau de L'adminitration</div>
+        <div class="fs-1 fst-italic text-center">Bienvenue sur le tableau d'Administration</div>
 
         {{$products->links()}}
         @include('back.product.partials.flash')

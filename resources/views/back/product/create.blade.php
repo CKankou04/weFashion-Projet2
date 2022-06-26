@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="registration-form">
-    <div class="container w-75 shadow-lg p-3 mb-5 rounded ">
+    <div class="container w-100 shadow-lg p-3 mb-5 rounded ">
         @if (Route::is('product.create'))
             <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
         @else
@@ -10,55 +10,54 @@
              @method ('PUT')
         @endif
             @csrf
-            <div class="row  "> <!--Colonne gauche-->
-            @if (Route::is('product.create'))
-                <p class="title fs-1 fst-italic text-center">Création d'un nouveau produit </p>
+            <div class="row  ">
+                @if (Route::is('product.create'))
+                    <p class="title fs-1 fst-italic text-center">Création d'un nouveau produit </p>
 
-            @else
-                <p class="title fs-1 fst-italic text-center">Modification d'un produit </p>
-            @endif
-                <div class="col-12 col-md-6 ">
-                    <div class="w-75 mx-5">
-                    <div class="form-group">
-                            <label for="name">Nom :</label>
-                            <input type="text" minlength="5" maxlength="100" class="form-control rounded-4" id="name" name="name" value="{{ old('name', ($product->name)??'') }}" required>
-                            @if($errors->has('name')) <span class="error bg-warning text-warning">{{$errors->first('name')}}</span>@endif
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label for="description">Description :</label>
-                        <textarea class="form-control rounded-4" id="description" name="description" rows="3">{{ old('description',($product->description)??'') }}</textarea>
-                        @if($errors->has('description')) <span class="error bg-warning text-warning">{{$errors->first('description')}}</span> @endif
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label for="category">Catégories :</label><br>
-                        <select id="category" name="category_id" class="form-control form-select rounded-4">
-                            <option value="0" class="form-control">Faites un choix</option>
+                @else
+                    <p class="title fs-1 fst-italic text-center">Modification d'un produit </p>
+                @endif
 
-                            @foreach($categories as $id => $name)
-                                <option class="form-control" @selected(old('category_id', ($product->category->id)?? '') == $id) value="{{$id}}">{{$name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label for="price">Prix :</label>
-                        <input type="number" class="form-control" id="price" name="price" step="0.01" min="0.01" max="9999.99" value="{{ old('price',($product->price) ??'') }}" required>
-                    </div>
-                    <br/>
-                    </div>
-
-
-
-                </div>
-
-                <div class="col-12 col-md-6"><!--Colonne droite-->
-                    <div class="w-75 mx-5">
+                <div class="col-sm-4"><!--Colonne gauche-->
+                    <div class="w-80 mx-4">
                         <div class="form-group">
+                                <label for="name">Nom :</label>
+                                <input type="text" minlength="5" maxlength="100" class="form-control " id="name" name="name" value="{{ old('name', ($product->name)??'') }}" required>
+                                @if($errors->has('name')) <span class="error bg-warning text-warning">{{$errors->first('name')}}</span>@endif
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label for="description">Description :</label>
+                            <textarea class="form-control rounded-4" id="description" name="description" rows="3">{{ old('description',($product->description)??'') }}</textarea>
+                            @if($errors->has('description')) <span class="error bg-warning text-warning">{{$errors->first('description')}}</span> @endif
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label for="category">Catégories :</label><br>
+                            <select id="category" name="category_id" class="form-control form-select ">
+                                <option value="0" class="form-control">Faites un choix</option>
+
+                                @foreach($categories as $id => $name)
+                                    <option class="form-control" @selected(old('category_id', ($product->category->id)?? '') == $id) value="{{$id}}">{{$name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <br/>
+
+                    </div>
+                </div>
+                <div class="col-sm-4 "> <!--colonne du milieu-->
+                <div class="w-80 mx-4">
+                <div class="form-group">
+                            <label for="price">Prix :</label>
+                            <input type="number" class="form-control" id="price" name="price" step="0.01" min="0.01" max="9999.99" value="{{ old('price',($product->price) ??'') }}" required>
+                    </div>
+                    <br/>
+                    <div class="form-group">
                             <label for="reference">Référence :</label>
                             <input type="text" minlength="16" maxlength="16" class="form-control" id="reference" name="reference" value="{{ old('reference',($product->reference)??'') }}" required>
                         </div>
+                        <br/>
                         <div class="form-group">
                             <label>Statut du produit :</label> <br>
                             @error('state')
@@ -74,6 +73,14 @@
                             </div>
                         </div>
                         <br/>
+                </div>
+
+
+                </div>
+
+                <div class="col-sm-4"><!--Colonne droite-->
+                    <div class="w-80 mx-4">
+
                         <div class="form-group">
                             <label>Choix de tailles :</label> <br>
                             @error('sizes')
@@ -114,19 +121,19 @@
                     @if (Route::is('product.edit'))
                         <p class="fs-6 mx-5" >Image associée :</p>
                         <div class="form-group-image mx-5">
-                            <img class="picture w-25" src="{{url('picture_product', $product->picture->link)}}" alt="">
+                            <img class="picture w-50" src="{{url('picture_product', $product->picture->link)}}" alt="">
                         </div>
                     @endif
 
 
                 </div>
             </div>
-            <div>
+            <div style="text-align:center">
                 @if (Route::is('product.edit'))
                     <button type="submit" class="btn btn-block mx-5 create-account  btn-success btn-lg">Modifier</button>
                 @endif
                 @if(Route::is('product.create'))
-                    <button type="submit" class="btn btn-block   mx-5 btn-success  create-account btn-lg">Ajouter</button>
+                    <button type="submit" class="btn btn-block   mx-5 btn-success  create-account btn-lg" >Ajouter</button>
                 @endif
             </div>
         </form>
