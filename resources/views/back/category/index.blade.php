@@ -34,8 +34,8 @@
                             </td>
 
                             <td >
-                            <div class="btn btn-primary text-center">
-                            <form class="delete" method="POST" action="{{route('category.destroy', $category->id)}}">
+                            <div class="btn btn-primary text-center show_confirm">
+                                <form class="delete" method="POST" action="{{route('category.destroy', $category->id)}}">
                                     @method('DELETE')
                                     @csrf
                                     <input type="submit" value="Supprimé" style="background:none; border:none; color:#FFFFFF; text-align: center;" />

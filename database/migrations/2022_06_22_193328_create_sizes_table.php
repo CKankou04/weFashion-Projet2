@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+         // creation des champs de la table size
         Schema::create('sizes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100);

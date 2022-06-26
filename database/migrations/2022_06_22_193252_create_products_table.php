@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+         // creation des champs de la table intermédiaire product
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100)->nullable();

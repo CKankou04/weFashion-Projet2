@@ -35,6 +35,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        // retoure la vue du formulaire de création d'une Catégorie en backOffice
         return view('back.category.create');
     }
 
@@ -46,11 +47,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // cette méthode permet de valider la création d'une catégorie
         $this->validate($request, [
             'name' => 'required'
         ]);
 
-        $category = Category::create($request->all()); // associé les fillable
+        $category = Category::create($request->all());
 
         return redirect()->route('category.index')->with('message', 'La catégorie a été ajoutée avec succès');
     }
@@ -74,6 +76,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        //function permettant de retourner le formulaire de modification d'une catégorie
         $category = Category::find($id);
 
         return view('back.category.create', compact('category'));
@@ -88,6 +91,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //function permettant de valider la modification d'une catégorie
         $this->validate($request, [
             'name' => 'required'
         ]);
@@ -107,10 +111,11 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        //suppression
         $category = Category::find($id);
 
         $category->delete();
 
-        return redirect()->route('category.index')->with('message', 'Catégorie supprimée avec succès');
+        return redirect()->route('category.index')->with('alerte', 'Suppression effectué');
     }
 }

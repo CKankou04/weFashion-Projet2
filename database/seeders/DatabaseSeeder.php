@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-
+        //creation de l'utilisation Edouard
         User::factory()->create([
             'name' => 'Edouard',
             'email' => 'edouard@gmail.com',

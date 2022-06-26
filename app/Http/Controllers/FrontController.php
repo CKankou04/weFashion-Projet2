@@ -12,9 +12,9 @@ class FrontController extends Controller
 
     public function __construct(){
 
-        // Envoie de données à la vue partielle
+        // Envoie de données àla vue
         view()->composer('partials.menu', function($view){
-            $categories = Category::pluck('name', 'id')->all(); // tableau associatif ['id' => 1]
+            $categories = Category::pluck('name', 'id')->all();
             $view->with('categories', $categories ); // on passe les données à la vue
         });
     }

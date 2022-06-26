@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        // creation des champs de la table intermédiaire product_size
         Schema::create('product_size', function (Blueprint $table) {
             $table->unsignedInteger('product_id');
             $table->unsignedInteger('size_id');
