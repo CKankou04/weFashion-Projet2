@@ -2,7 +2,9 @@ Lien de mon gitHub
 
     https://github.com/CKankou04/weFashion-Projet2
     
-Schema de mon model de BD à la racine du projet en format.pnf
+Schema de mon model de BD à la racine du projet en format
+
+    .png
 
 Dépences à installer
 
