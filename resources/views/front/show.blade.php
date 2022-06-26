@@ -2,22 +2,31 @@
 
 @section('content')
 
-    <div class="row">
-        <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6">
+    <div class="row rounded-3">
+        <div class="col-xl-3 mt-5">
             <a href="#" class="thumbnail">
                 <img class="w-100" src="{{asset('picture_product/'.$product->picture->link)}}" alt="{{$product->picture->title}}">
             </a>
         </div>
         <div class="col-12 col-md-6 my-4 my-md-0">
-            <p class="product-title"><h2>{{$product->name}}</h2></p><br>
+            <p class="product-title fs-3 mt-5 fst-italic">{{$product->name}}</p><br>
 
-            <div>
-                <p>{{ $product->description }}</p>
-                <p><strong>Référence produit : </strong><span class="text-uppercase">{{ $product->reference }}</span> </p>
+            <div class="mb-3">
+                <div class="fw-bold">Description:</div>
+                <div>{{ $product->description }}</div>
+            </div>
+            <div class="mb-3">
+                <span class="fw-bold">Référence du produit : </span>
+                <span>{{ $product->reference }}</span>
             </div>
 
+            <div class="mb-3">
+             <span class="fw-bold">Price : </span><span>{{ $product->price }} € TTC</span>
+            </div>
 
-            <p><strong>Price : </strong>{{ $product->price }} € TTC</p>
+            <div>
+             <span class="fw-bold">Catégorie: </span><span>{{ $product->category->name }}</span>
+            </div>
 
             <select class="custom-select my-4">
                 <option selected disabled>Taille</option>
@@ -26,7 +35,7 @@
                 @endforeach
             </select><br><br>
 
-            <button type="button" class="btn btn-primary">Acheter</button>
+            <button type="button" class="btn btn-success">Acheter</button>
         </div>
     </div>
 @endsection

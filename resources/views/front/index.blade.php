@@ -19,8 +19,8 @@
                                     </a>
                                 </div>
 
-                                @if($product->state == "sale")
-                                <span class="product-discount-label">promo</span>
+                                @if($product->state == "Sale")
+                                <span class="product-discount-label">solde</span>
                                 @endif
                                 <a href="" class="add-to-cart">Ajouter au panier</a>
                             </div>

@@ -1,110 +1,57 @@
-<!-- JQUERY STEP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
-<div class="wrapper">
-@if (Route::is('product.create'))
-            <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
-        @else
-            <form action="{{route('product.update',$product->id)}}" method="post" enctype="multipart/form-data">
-             @method ('PUT')
-        @endif
-            @csrf
-    <div id="wizard">
-            <!-- SECTION 1 -->
-            <h4>Ajout d'un nouveau produit</h4>
-            <section>
-                <div class="form-row">
-                    <input type="text" class="form-control" placeholder="Name" id="name" name="name" value="{{ old('name', ($product->name)??'') }}" required>
-                    @if($errors->has('name')) <span class="error bg-warning text-warning">{{$errors->first('name')}}</span>@endif
-                </div>
-
-                <div class="form-row">
-                    <textarea class="form-control" style="margin-bottom: 18px" placeholder="Description" id="description" name="description" rows="3">{{ old('description',($product->description)??'') }}</textarea>
-                </div>
-                <div class="form-row">
-                    <input type="text" class="form-control" placeholder="Email">
-                </div>
-
-                <div class="form-row">
-                    <select id="category" name="category_id" class="form-control form-select">
-                            <option value="0" class="form-control">Faites un choix</option>
-
-                            @foreach($categories as $id => $name)
-                                <option class="form-control" @selected(old('category_id', ($product->category->id)?? '') == $id) value="{{$id}}">{{$name}}</option>
-                            @endforeach
-
-                    </select>
-                </div>
-            </section> <!-- SECTION 2 -->
-            <h4></h4>
-            <section>
-                <div class="form-row">
-                    <input type="number" class="form-control" placeholder="price" id="price" name="price" step="0.01" min="0.01" max="9999.99" value="{{ old('price',($product->price) ??'') }}" required>
-                </div>
-                <div class="form-row">
-                     <input type="text" class="form-control" placeholder="Reference" minlength="16" maxlength="16" id="reference" name="reference" value="{{ old('reference',($product->reference)??'') }}" required>
-                </div>
-                <div class="form-row">
-                     <input type="text" class="form-control" placeholder="Titre de l'image" minlength="16" maxlength="16" id="picture_title" name="picture_title" value="{{ old('picture_title',($product->picture->title)??'') }}">
-
-                    <input type="file" class="form-control-file" name="picture" id="picture">
-                    <img src="{{ old('picture')}}" />
-                </div>
-            </section> <!-- SECTION 3 -->
-            <h4></h4>
-            <section>
-                    <div class="form-group">
-                        <label>Statut</label> <br>
-                        @error('state')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="state0" name="state" @checked(old('state', ($product->state)?? '') == 'Standard') value="Standard">
-                            <label class="form-check-label" for="state0">Standard</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="status1" name="status" @checked(old('state', ($product->state)?? '') == 'Sale') value="Sale">
-                            <label class="form-check-label" for="state1">Solde</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Choisissez les tailles</label> <br>
-                        @error('sizes')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                        @foreach ($sizes as $id => $name)
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="size{{$id}}" value="{{ $id }}" @checked (in_array( $id, old('sizes', ($allSizes)?? []) )) name="sizes[]" >
-                                <label class="form-check-label" for="{{ $name}}">{{ $name }}</label>
+<div class="container">
+    {{$products->links()}}
+        <p><a href="{{route('product.create')}}"><button type="button" class="btn btn-primary btn-lg">Ajouter un produit</button></a></p>
+        {{-- On inclut le fichier des messages retournés par les actions du contrôleurs ProductController--}}
+        @include('back.product.partials.flash')
+        <p class="text-md-end">{{ $products->total() }} résultats</p>
+        <div class="table-responsive">
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th>Nom:</th>
+                        <th>Catégorie:</th>
+                        <th>Prix:</th>
+                        <th>Statut:</th>
+                        <th>Modifier:</th>
+                        <th>Supprimer:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @forelse($products as $product)
+                    <tr>
+                        <td>{{$product->name}}</td>
+                        <td>{{$product->category->name?? 'aucune category' }}</td>
+                        <td>{{$product->price}} €</td>
+                        <td>
+                                @if($product->isVisible == 'published')
+                                    <div >Publié</div>
+                                @else
+                                    <div>Non publié</div>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{route('product.edit', $product->id)}}" >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg>
+                                </a>
+                            </td>
+                        <td>
+                            <div class="btn btn-primary">
+                            <form class="delete" method="POST" action="{{route('product.destroy', $product->id)}}">
+                                    @method('DELETE')
+                                    @csrf
+                                    <input class="btn btn-secondary" type="submit" value="Supprimé" >
+                                </form>
                             </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="form-group">
-                        <label>Visibilité</label> <br>
-                        @error('published')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="published1" @checked(old('isVisible', ($product->isVisible)?? '') == 'published') value="published"  name="isVisible">
-                            <label class="form-check-label" for="published1">Publié</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="published0" @checked(old('isVisible', ($product->isVisible)?? '') == 'unpublished') value="unpublished"  name="isVisible">
-                            <label class="form-check-label" for="published0">Non-Publié</label>
-                        </div>
-                    </div>
-
-            </section> <!-- SECTION 4 -->
-            <h4></h4>
-            <section>
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-                    <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
-                    <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
-                </svg>
-                @if(Route::is('product.create'))
-                    <button type="submit" class="btn btn-block  btn-primary  create-account btn-lg">Ajouter</button>
-                @endif
-            </section>
+                        </td>
+                    </tr>
+                    @empty
+                        aucun titre ...
+                    @endforelse
+                </tbody>
+            </table>
+            {{$products->links()}}
         </div>
-    </form>
-</div>
+    </div>

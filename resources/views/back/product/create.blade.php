@@ -11,7 +11,12 @@
         @endif
             @csrf
             <div class="row  "> <!--Colonne gauche-->
+            @if (Route::is('product.create'))
                 <p class="title fs-1 fst-italic text-center">Création d'un nouveau produit </p>
+
+            @else
+                <p class="title fs-1 fst-italic text-center">Modification d'un produit </p>
+            @endif
                 <div class="col-12 col-md-6 ">
                     <div class="w-75 mx-5">
                     <div class="form-group">
