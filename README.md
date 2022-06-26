@@ -10,7 +10,7 @@ Dépences à installer
 A faire:
 
 
-    Creer une BD appélé "prodcut"
+    Creer une BD appélé "product"
     Creer le fichier .env
 
 Pour remplir les tables de la DB
