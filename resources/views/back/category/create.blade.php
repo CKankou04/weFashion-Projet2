@@ -10,9 +10,11 @@
 
 @section('content')
     <div class="container">
+    <!-- utilisé cette route si c'est pour la creation -->
         @if (Route::is('category.create'))
             <form action="{{route('category.store')}}" method="post" enctype="multipart/form-data">
         @else
+         <!-- sinon celle ci pour la modification -->
             <form action="{{route('category.update',$category->id)}}" method="post" enctype="multipart/form-data">
              @method ('PUT')
         @endif

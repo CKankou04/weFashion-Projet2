@@ -19,7 +19,7 @@ class FrontController extends Controller
         });
     }
 
-    // fonction index permettant d'afficher la page d'accueil
+    // fonction index permettant d'afficher la page d'accueil listant tous les produits en tenant compt de la pagination
 
     public function index(){
         $products = Product::published()->paginate($this->paginate); // pagination
@@ -29,7 +29,6 @@ class FrontController extends Controller
     }
 
     // function show permet d'afficher en detail 1 seul produit cliquer
-
     public function show(int $id){
 
         $product = Product::find($id);
@@ -38,13 +37,13 @@ class FrontController extends Controller
     }
 
     // fucntion showProductBySale() renvoie tous les produits en solde
-
     public function showProductBySale(){
         //
         $products = Product::with('picture')->where('state', 'sale')->paginate($this->paginate);
 
         return view('front.index', ['products' => $products]);
     }
+
 // fucntion showProductByCategory() qui renvoie les produits par catégorie
     public function showProductByCategory(int $id){
 

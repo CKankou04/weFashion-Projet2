@@ -17,8 +17,8 @@ class ProductController extends Controller
 
         // méthode pour injecter des données à une vue partielle
         view()->composer('partials.menu', function($view){
-            $categories = Category::pluck('name', 'id')->all(); // on récupère un tableau associatif ['id' => 1]
-            $view->with('categories', $categories ); // on passe les données à la vue
+            $categories = Category::pluck('name', 'id')->all();
+            $view->with('categories', $categories );
         });
     }
     /**
@@ -28,7 +28,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //permet d'afficher la page d'acceuil du back ( la liste des produits)
+        //permet d'afficher la page d'acceuil du back ( dans un tableau des produits)
         $products = Product::paginate($this->paginate);
         return view('back.product.index', ['products' => $products]);
     }
@@ -40,7 +40,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        // permet de récupérer une collection type array avec en clé id => name
+
         $sizes = Size::pluck('name', 'id')->all();
         $categories = Category::pluck('name', 'id')->all();
 
@@ -59,9 +59,9 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required|string',
             'category_id' => 'integer',
-            'sizes.*' => 'integer', // pour vérifier un tableau d'entiers il faut mettre authors.*
+            'sizes.*' => 'integer', // pour vérifier un tableau d'entiers
             'isVisible' => 'in:published,unpublished',
-            'picture_title' => 'string|nullable', // pour le titre de l'image si il existe
+            'picture_title' => 'string|nullable',
             'picture' => 'image|max:3000',
             'reference' => 'string',
             'state' => 'string'
@@ -73,7 +73,7 @@ class ProductController extends Controller
 
         $product->sizes()->attach($request->sizes);
 
-        // image
+
         $im = $request->file('picture');
 
         // si on associe une image à un produit
@@ -136,36 +136,35 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required|string',
             'category_id' => 'integer',
-            'sizes.*' => 'integer', // pour vérifier un tableau d'entiers il faut mettre authors.*
+            'sizes.*' => 'integer',
             'isVisible' => 'in:published,unpublished',
-            'picture_title' => 'string|nullable', // pour le titre de l'image si il existe
+            'picture_title' => 'string|nullable',
             'picture' => 'image|max:3000',
             'reference' => 'string',
             'state' => 'string'
         ]);
 
-        $product =Product::find($id); // associé les fillables
+        $product =Product::find($id);
 
         $product->update($request->all());
 
-        // on utilisera la méthode sync pour mettre à jour les auteurs dans la table de liaison
+
         $product->sizes()->sync($request->sizes);
 
 
-        // image
         $im = $request->file('picture');
 
-        // si on associe une image à un produit
+
         if (!empty($im)) {
 
             $link = $request->file('picture')->store('images');
 
-            // suppression de l'image si elle existe
-                Storage::disk('local')->delete($product->picture->link); // supprimer physiquement l'image
-                $product->picture()->delete(); // supprimer l'information en base de données
+
+                Storage::disk('local')->delete($product->picture->link);
+                $product->picture()->delete();
 
 
-            // mettre à jour la table picture pour le lien vers l'image dans la base de données
+
             $product->picture()->create([
                 'link' => $link,
                 'title' => $picture_title?? 'Titre'
@@ -188,6 +187,6 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('product.index')->with('message', 'produit supprimé avec succès');
+        return redirect()->route('product.index')->with('message', 'Suppression effectué');
     }
 }

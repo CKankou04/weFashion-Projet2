@@ -116,6 +116,6 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->route('category.index')->with('alerte', 'Suppression effectué');
+        return redirect()->route('category.index')->with('message', 'Suppression effectué');
     }
 }

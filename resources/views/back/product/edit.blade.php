@@ -56,7 +56,7 @@
                     <input type="radio" @if($product->state == 'unpublished') checked @endif name="state" value="unpublished" > dépulier<br>
                 </div>
                 <div class="input-file">
-                    <h2>File :</h2>
+                    <h2>Media :</h2>
                     <label for="category">Title image :</label>
                     <input type="text" name="title_image" value="{{old('title_image')}}">
                     <input class="file" type="file" name="picture" >
