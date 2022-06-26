@@ -13,9 +13,12 @@
                     <div class="col-md-3 col-sm-6">
                         <div class="product-grid">
                             <div class="product-image">
-                                <a href="{{url('product', $product->id)}}" class="image">
-                                    <img class="card-img-top" src="{{ asset('picture_product/'.$product->picture->link) }}" alt="">
-                                </a>
+                                <div class="imgcontainer">
+                                    <a href="{{url('product', $product->id)}}" class="image">
+                                        <img class="card-img-top" src="{{ asset('picture_product/'.$product->picture->link) }}" alt="">
+                                    </a>
+                                </div>
+
                                 @if($product->state == "sale")
                                 <span class="product-discount-label">promo</span>
                                 @endif

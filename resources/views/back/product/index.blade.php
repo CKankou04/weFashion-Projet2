@@ -31,7 +31,7 @@
                                 @if($product->isVisible == 'published')
                                     <button type="button" class="btn btn-info">Publié</button>
                                 @else
-                                    <button type="button" class="btn btn-secondary">Non publié</button>
+                                    <button type="button" class="btn btn-info opacity-25">Non publié</button>
                                 @endif
                             </td>
                             <td align="center">
